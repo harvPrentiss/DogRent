@@ -1,0 +1,77 @@
+<!doctype html>
+<html ng-app='magicCards'>
+  <head>
+    <link type ="text/css" rel="stylesheet" href="app/Styles/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="app/Styles/global.css"/>
+    <link type="text/css" rel="stylesheet" href="app/Styles/angular-flash.css" />
+  </head>
+  <body ng-controller="applicationController">
+    <div class="row pageHeader">
+        <div class="col-xs-4 col-md-6">
+          <h2 class="siteTitle"><a href="#main" class="homeLink">Magic</a></h2>
+        </div> 
+        <div ng-switch="userStatus" class="col-xs-4 col-md-6 userControls">            
+            <div ng-switch-when="login" class="loginControls animate-switch">
+                <form name='loginForm' ng-controller='loginController' ng-submit="login(credentials)" novalidate>
+                    <label for="email">Email:</label>
+                    <input type="text" name="userEmail" id="email" ng-model="credentials.userEmail">
+
+                    <label for="password">Password:</label>
+                    <input type="password" name="userPassword" id="password" ng-model="credentials.userPassword">
+
+                    <button type="submit" class='logRegBtns'>Login</button>
+                    <button ng-click="setNone()" class='logRegBtns'>Cancel</button>
+                </form>
+            </div>
+            <div ng-switch-when="register" class='registerControls animate-switch'>
+                <form name='registrationForm' ng-controller='registrationController' ng-submit="register(registrationData)" novalidate>
+                    <label for="email">Email:</label>
+                    <input type="text" name="userEmail" id="regEmail" ng-model="registrationData.userEmail">
+
+                    <label for="username">Username:</label>
+                    <input type="text" name="userName" id="regUsername" ng-model="registrationData.userName">
+
+                    <label for="email">Password:</label>
+                    <input type="password" name="userPassword" id="regPassword" ng-model="registrationData.userPassword">
+
+                    <button type="submit" class='logRegBtns'>Register</button>
+                    <button ng-click="setNone()" class='logRegBtns'>Cancel</button>
+                </form>
+            </div>
+            <div ng-switch-when="loggedIn" class='userInfo animate-switch'>
+                <label class="userNameLbl headerItem">{{currentUser}}</label>
+                <label class="settingsLbl headerItem">Settings</label>
+                <label class="logoutLbl headerItem">Logout</label>
+            </div>
+            <div ng-switch-default class="logRegBtnsBox animate-switch">
+                <button ng-click="setLogin()" class='logRegBtns'>Login</button>
+                <button ng-click="setRegister()" class='logRegBtns'>Register</button>
+            </div>
+        </div>
+    </div>  
+    <div class="row navMenu">
+        <div class="col-xs-12">
+            <ul class="list-inline navList">
+                <li><a href="#cardSearch">Card Search</a></li>
+                <li ng-show="loggedIn"><a href="#deckBuild">Deck Builder</a></li>
+                <li ng-show="loggedIn"><a href="#myCards">My Cards</a></li>
+            </ul>
+        </div>  
+    </div>  
+    <div class="container-fluid">        
+    	<div ng-view></div>
+    </div>
+    <div flash-message="5000"></div>
+      <script src="app/js/jquery-3.1.1.min.js"></script>
+      <script src="app/js/bootstrap.js"></script>
+      <script src="app/Vendor/angular.min.js"></script>
+      <script src="app/Vendor/angular-route-min.js"></script>
+      <script src="app/Vendor/angular-cookies-min.js"></script>
+      <script src="app/Vendor/angular-flash.js"></script>
+      <script src="app/js/main.js"></script>
+      <script src="app/js/homeController.js"></script>
+      <script src='app/js/applicationController.js'></script>
+      <script src='app/js/registrationController.js'></script>
+      <script src='app/js/loginController.js'></script>
+  </body>
+</html>
